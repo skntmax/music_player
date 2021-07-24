@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>music player </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- <script src="./js.js">
+        
+    </script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+        
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@100&display=swap');
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main_container"  >
+        <div class="music_player offset-md-2 mx-auto my-auto  " id="main_background" >
+            <h3 class="text-center  " id="song">song name </h3>
+            <h4 class="text-center " id="artist"> artist </h4>
+            <div class="my-auto">
+                <img src="./back.gif" alt="music_image" id="image" class="my-auto">
+            </div>
+                    <audio   src="./khairiyat.wav" > </audio>
+            <div class="music_controls" >
+            <i class="fa fa-backward " title="backward" aria-hidden="true" id="backward"></i>
+            <i class="fas fa-play main_button" title="play"  id="play" ></i>  
+            <i class="fa fa-forward" aria-hidden="true" id="forward" title="forward"></i>
+             </div>
+        </div>
+    </div>
+
+    <script  >
+$(document).ready(function(){
+  
+let  song_image=["./back13.gif","./back12.gif","./back11.gif","./back10.gif","./back11.gif","./back12.gif",];
+let songs = [
+    {
+     title: "Mast Magan _ 2 States (2014) ",
+     artist:"Artist :  Arijit singh  ",
+     path: "./music/Mast Magan _ 2 States (2014) _ Full Song Story HD(1080P_HD).mp4"
+    },
+    {
+     title: "Beautiful (Full Video) _ Millind Gaba _ Oshin Brar(1080P_HD)",
+     artist:"Artist :  _ Millind Gaba _",
+     path: "./music/Beautiful (Full Video) _ Millind Gaba _ Oshin Brar(1080P_HD).mp4"
+    },
+    {
+     title: "Daaru Party (Full Song) _ Millind Gaba _ Latest Pu",
+     artist:" Artist :  _ Millind Gaba _",
+     path: "./music/Daaru Party (Full Song) _ Millind Gaba _ Latest Pu.mp4"
+    },
+    {
+    title: "Sukoon Mila Full Video _ Mary Kom _ Priyanka Chopr(1080P_HD)",
+    artist:" Artist : maine gaaya hahah ",
+    path: "./music/Sukoon Mila Full Video _ Mary Kom _ Priyanka Chopr(1080P_HD).mp4"
+    },
+    {
+    title: "Bas tera pyaar jaroori hai 🥺🥺😌",
+    artist:" Artist : are hm khud hi hai 😌  ",
+    path: "./music/Tera Pyar _ Lyrical Song _ Jassi Gill _ Latest Pun(1080P_HD).mp4"
+    }
+];
+
+let song= document.getElementById('song'); 
+let artist= document.getElementById('artist'); 
+
+ const music = document.querySelector("audio");
+ const play = document.getElementById("play");
+ const image = document.getElementById("image");
+ const back= document.getElementById("main_background");
+ const forward= document.getElementById("forward");
+    let isPlaying=false;
+    let songIndex=0;
+    let currentSongIndex=0;
+// play function 
+    let playNow=()=>{
+    isPlaying=true;
+    console.log('playing'); 
+    songIndex=(songIndex+1)%song_image.length;
+
+    currentSongIndex=(currentSongIndex+1)%songs.length;
+    image.src=song_image[songIndex];
+    music.src=`${songs[currentSongIndex].path}`;
+    song.innerHTML=songs[currentSongIndex].title;
+    artist.innerHTML=songs[currentSongIndex].artist;
+    document.body.style.backgroundImage = `url('${song_image[songIndex]}')`;
+    document.body.style.backgroundSize = "100% 100%";
+    document.body.style.backgroundRepeat="no-repeat";
+    song.style.color="white";
+    artist.style.color="white";
+    forward.style.color="white";
+    backward.style.color="white";
+    back.classList.add('after_play');  
+    play.classList.replace("fa-play","fa-pause");
+    image.classList.add('anime');
+    music.play();    
+    }
+// pause function 
+   let pauseNow =()=>{
+    music.pause();
+    console.log('paused');
+    isPlaying=false;
+    play.classList.replace("fa-pause","fa-play");
+   }
+   
+    play.addEventListener("click", () => {
+    if(isPlaying==false){
+      playNow();     
+    }
+    else{
+      pauseNow();    
+    }  
+     });
+    
+    forward.addEventListener("click",()=>{
+      forwarding();   
+     }); 
+
+     backward.addEventListener("click",()=>{
+      forwarding();   
+     }); 
+     
+     function forwarding(){
+    isPlaying=true;
+    songIndex=(songIndex+1)%song_image.length;
+    currentSongIndex=(currentSongIndex+1)%songs.length;
+    image.src=song_image[songIndex];
+    music.src=`${songs[currentSongIndex].path}`;
+    song.innerHTML=songs[currentSongIndex].title;
+    artist.innerHTML=songs[currentSongIndex].artist;
+    document.body.style.backgroundImage = `url('${song_image[songIndex]}')`;
+    document.body.style.backgroundSize = "100% 100% ";
+    document.body.style.backgroundRepeat="no-repeat";
+    back.classList.add('after_play');  
+    play.classList.replace("fa-play","fa-pause");
+    music.play(); 
+     }
+
+
+     function backwarding(){
+    isPlaying=true;
+    songIndex=(songIndex+1)%song_image.length;
+    if(songIndex==0){
+        songIndex=songImage.length-1; 
+    }
+    currentSongIndex=(currentSongIndex+1)%songs.length;
+    image.src=song_image[songIndex];
+    music.src=`${songs[currentSongIndex].path}`;
+    song.innerHTML=songs[currentSongIndex].title;
+    artist.innerHTML=songs[currentSongIndex].artist;
+    document.body.style.backgroundImage = `url('${song_image[songIndex]}')`;
+    document.body.style.backgroundSize = "100% 100% ";
+    document.body.style.backgroundRepeat="no-repeat";
+    back.classList.add('after_play');  
+    play.classList.replace("fa-play","fa-pause");
+    music.play(); 
+     }
+
+     
+   
+    });
+    </script>
+
+</body>
+</html>
